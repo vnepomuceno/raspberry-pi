@@ -1,0 +1,58 @@
+---
+- name: Bootstrap Raspberry Pi
+  hosts: raspberrypi
+  become: true
+
+  tasks:
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg2
+          - software-properties-common
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=arm64] https://download.docker.com/linux/debian buster stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Install Python
+      apt:
+        name: python3
+        state: present
+
+    - name: Install dependencies
+      include: dependencies.yml
+
+    - name: Enable SSH
+      replace:
+        path: /boot/config.txt
+        regexp: '^#?\s*hdmi_force_hotplug=1'
+        replace: 'hdmi_force_hotplug=1'
+        backup: yes
+
+    - name: Set up SSH keys
+      authorized_key:
+        user: pi
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+    - name: Restart SSH service
+      service:
+        name: ssh
+        state: restarted
