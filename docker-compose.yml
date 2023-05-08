@@ -1,0 +1,11 @@
+version: '3.5'
+services:
+
+  honeygain:
+    image: honeygain/honeygain:latest
+    container_name: honeygain
+    platform: linux/amd64
+    restart: unless-stopped
+    command: -tou-accept -email ${HONEYGAIN_USERNAME} -pass ${HONEYGAIN_PASSWORD} -device ${HONEYGAIN_DEVICE}
+    env_file:
+      - ./.env
