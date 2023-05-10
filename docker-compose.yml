@@ -9,3 +9,10 @@ services:
     command: -tou-accept -email ${HONEYGAIN_USERNAME} -pass ${HONEYGAIN_PASSWORD} -device ${HONEYGAIN_DEVICE}
     env_file:
       - ./.env
+
+  earnapp:
+    image: fazalfarhan01/earnapp:lite
+    container_name: earnapp
+    restart: unless-stopped
+    env_file:
+      - ./.env
