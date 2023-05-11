@@ -1,3 +1,4 @@
 .idea
-.env
+honeygain.env
+earnapp.env
 .DS_Store
