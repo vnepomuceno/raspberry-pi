@@ -2,3 +2,4 @@
 honeygain.env
 earnapp.env
 .DS_Store
+ansible/hosts.yml
