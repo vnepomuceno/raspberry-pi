@@ -16,3 +16,18 @@ services:
     restart: unless-stopped
     env_file:
       - earnapp.env
+
+  packetstream:
+    image: packetstream/packetstream-agent:latest
+    container_name: packetstream
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PS_USER=<your_username>
+      - PS_PASSWORD=<your_password>
+      - PS_CONTAINER_NAME=packetstream
+      - PS_LOGS_PATH=/var/log/packetstream/
+    env_file:
+      - packetstream.env
+    volumes:
+      - ./packetstream:/var/log/packetstream/
