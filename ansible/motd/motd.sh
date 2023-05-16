@@ -13,7 +13,7 @@ read one five fifteen rest < /proc/loadavg
 echo "$(tput setaf 2)
    .~~.   .~~.         `date +"%A, %e %B %Y, %r"`
   '. \ ' ' / .'        `uname -srmo`$(tput setaf 1)
-   .~ .~~~..~.         
+   .~ .~~~..~.
   : .~.'~'.~. :        OS Name............: `cat /etc/os-release | grep PRETTY_NAME | cut -c 14- | rev | cut -c 2- | rev`
  ~ (   ) (   ) ~       Uptime.............: ${UPTIME}
 ( : '~'.~.'~' : )      Memory.............: `cat /proc/meminfo | grep MemFree | awk {'print $2'}`kB (Free) / `cat /proc/meminfo | grep MemTotal | awk {'print $2'}`kB (Total)
