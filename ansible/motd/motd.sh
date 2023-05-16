@@ -16,9 +16,9 @@ echo "$(tput setaf 2)
    .~ .~~~..~.
   : .~.'~'.~. :        OS Name............: `cat /etc/os-release | grep PRETTY_NAME | cut -c 14- | rev | cut -c 2- | rev`
  ~ (   ) (   ) ~       Uptime.............: ${UPTIME}
-( : '~'.~.'~' : )      Memory.............: `cat /proc/meminfo | grep MemFree | awk {'print $2'}`kB (Free) / `cat /proc/meminfo | grep MemTotal | awk {'print $2'}`kB (Total)
+( : '~'.~.'~' : )      Memory.............: `cat /proc/meminfo | grep MemFree | awk {'print $2/1000'}`MB (Free) / `cat /proc/meminfo | grep MemTotal | awk {'print $2/1000'}`MB (Total)
  ~ .~ (   ) ~. ~       Load Averages......: ${one}, ${five}, ${fifteen} (1, 5, 15 min)
   (  : '~' :  )        Running Processes..: `ps ax | wc -l | tr -d " "`
-   '~ .~~~. ~'         IP Addresses.......: `/sbin/ifconfig eth0 | /bin/grep "inet addr" | /usr/bin/cut -d ":" -f 2 | /usr/bin/cut -d " " -f 1` and `wget -q -O - http://icanhazip.com/ | tail`
+   '~ .~~~. ~'         IP Addresses.......: `hostname -I | cut -c -12` and `wget -q -O - http://icanhazip.com/ | tail`
        '~'             Weather............: `curl -s "http://rss.accuweather.com/rss/liveweather_rss.asp?metric=1&locCode=EUR|UK|UK001|NAILSEA|" | sed -n '/Currently:/ s/.*: \(.*\): \([0-9]*\)\([CF]\).*/\2°\3, \1/p'`
 $(tput sgr0)"
