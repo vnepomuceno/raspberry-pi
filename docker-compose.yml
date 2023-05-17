@@ -8,11 +8,11 @@ services:
     restart: unless-stopped
     command: -tou-accept -email ${HONEYGAIN_USERNAME} -pass ${HONEYGAIN_PASSWORD} -device ${HONEYGAIN_DEVICE}
     env_file:
-      - honeygain.env
+      - config/honeygain.env
 
   earnapp:
     image: fazalfarhan01/earnapp:lite
     container_name: earnapp
     restart: unless-stopped
     env_file:
-      - earnapp.env
+      - config/earnapp.env

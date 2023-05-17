@@ -2,7 +2,6 @@
 - name: Ping Raspberry Pi
   hosts: raspberrypi
   gather_facts: false
-
   tasks:
     - name: Ping Raspberry Pi
       ping:

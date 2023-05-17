@@ -1,0 +1,23 @@
+---
+- name: Download configuration files from S3 bucket to Raspberry Pi
+  hosts: raspberrypi
+  become: true
+  gather_facts: true
+  vars_files:
+    - ../../config/aws.yml
+  tasks:
+    - name: Display environment variable during playbook run
+      debug:
+        msg: "Downloading config from S3 bucket '{{ s3_bucket_name }}'"
+
+    - name: Download configuration files from S3
+      aws_s3:
+        bucket: "{{ s3_bucket_name }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        object: "config/{{ item | basename }}"
+        dest: "{{ ansible_env.PWD }}/raspberry-pi/{{ item | basename }}"
+        mode: get
+      with_items:
+        - "config/earnapp.env"
+        - "config/honeygain.env"
