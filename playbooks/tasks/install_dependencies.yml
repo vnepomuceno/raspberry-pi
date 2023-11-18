@@ -1,0 +1,12 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+      - htop
+      - ripgrep
+      - hstr
+      - git
+      - jq
+      - exa
+      - bash-completion
+    state: present
