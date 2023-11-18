@@ -1,0 +1,23 @@
+---
+- name: Copy MOTD shell script to /etc/profile.d
+  copy:
+    src: tasks/motd/motd.sh
+    dest: /etc/profile.d/motd.sh
+    mode: '+x'
+
+- name: Find scripts in /etc/update-motd.d
+  find:
+    paths: /etc/update-motd.d
+    file_type: any
+  register: found_scripts
+
+- name: Delete scripts in /etc/update-motd.d
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ found_scripts.files }}"
+
+- name: Delete static MOTD
+  file:
+    path: /etc/motd
+    state: absent

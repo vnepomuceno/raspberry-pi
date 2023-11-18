@@ -1,0 +1,23 @@
+---
+- name: Bootstrap Raspberry Pi
+  hosts: raspberrypi
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Setup custom MOTD
+      include_tasks: tasks/setup_motd.yml
+
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker and Docker Compose
+      include_tasks: tasks/install_docker.yml
+
+    - name: Install Python
+      apt:
+        name: python3
+        state: present
+
+    - name: Install dependencies
+      include_tasks: tasks/install_dependencies.yml

@@ -1,5 +1,3 @@
+config/*
 .idea
-honeygain.env
-earnapp.env
 .DS_Store
-ansible/hosts.yml
