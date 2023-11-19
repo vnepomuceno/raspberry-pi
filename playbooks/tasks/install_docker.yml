@@ -23,11 +23,6 @@
     name: docker-ce
     state: present
 
-- name: Install pip3 (Python package installer)
-  apt:
-    name: python3-pip
-    state: present
-
 - name: Add docker permissions to the user
   command: "sudo usermod -aG docker ${USER}"
 

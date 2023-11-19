@@ -4,6 +4,9 @@
   gather_facts: true
   become: true
   tasks:
+    - name: Install dependencies
+      include_tasks: tasks/install_dependencies.yml
+
     - name: Setup custom MOTD
       include_tasks: tasks/setup_motd.yml
 
@@ -13,11 +16,3 @@
 
     - name: Install Docker and Docker Compose
       include_tasks: tasks/install_docker.yml
-
-    - name: Install Python
-      apt:
-        name: python3
-        state: present
-
-    - name: Install dependencies
-      include_tasks: tasks/install_dependencies.yml

@@ -1,0 +1,24 @@
+---
+- name: Upload Raspberry Pi configuration files to S3 bucket
+  hosts: raspberrypi
+  become: true
+  gather_facts: true
+  vars_files:
+    - ../../config/aws.yml
+  tasks:
+    - name: Display environment variable during playbook run
+      debug:
+        msg: "Writing in S3 bucket '{{ s3_bucket_name }}'"
+
+    - name: Upload files to S3 bucket
+      aws_s3:
+        bucket: "{{ s3_bucket_name }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        object: "config/{{ item | basename }}"
+        src: "{{ item }}"
+        mode: put
+        overwrite: yes
+      with_items:
+        - "{{ ansible_env.PWD }}/raspberry-pi/earnapp.env"
+        - "{{ ansible_env.PWD }}/raspberry-pi/honeygain.env"
