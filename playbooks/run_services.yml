@@ -1,0 +1,8 @@
+---
+- name: Bootstrap Raspberry Pi
+  hosts: raspberrypi
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Clone repositories
+      include_tasks: tasks/clone_repositories.yml

@@ -1,0 +1,12 @@
+---
+- name: Ensure the directory 'raspberry-pi' exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.PWD }}/raspberry-pi"
+    state: directory
+  become: yes
+
+- name: Clone Git repository 'raspberry-pi'
+  git:
+    repo: https://github.com/vnepomuceno/raspberry-pi.git
+    dest: "{{ ansible_env.PWD }}/raspberry-pi"
+    version: main
