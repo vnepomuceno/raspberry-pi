@@ -21,3 +21,5 @@
       with_items:
         - "config/earnapp.env"
         - "config/honeygain.env"
+        - "config/homepage/services.yaml"
+        - "config/homepage/settings.yaml"
