@@ -22,3 +22,5 @@
       with_items:
         - "{{ ansible_env.PWD }}/raspberry-pi/earnapp.env"
         - "{{ ansible_env.PWD }}/raspberry-pi/honeygain.env"
+        - "{{ ansible_env.PWD }}/raspberry-pi/config/homepage/services.yaml"
+        - "{{ ansible_env.PWD }}/raspberry-pi/config/homepage/settings.yaml"
