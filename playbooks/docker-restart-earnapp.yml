@@ -1,0 +1,11 @@
+---
+- name: Restart Docker Service EarnApp
+  hosts: raspberrypi
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Stop Docker Service EarnApp
+      command: "docker stop earnapp"
+
+    - name: Start Docker Service EarnApp
+      command: "docker-compose -f {{ ansible_env.PWD }}/raspberry-pi/docker-compose.yml up -d earnapp"
