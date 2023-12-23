@@ -1,0 +1,80 @@
+- Administration:
+    - Nginx Proxy Manager:
+        description: Expose your services easily and securely
+        icon: nginx-proxy-manager.png
+        href: https://nginx.tiltlab.pro
+        widget:
+          type: npm
+          url: https://nginx.tiltlab.pro
+          username: {{ nginx_proxy_manager_username }}
+          password: {{ nginx_proxy_manager_password }}
+
+    - Grafana:
+        description: Open observability platform
+        icon: grafana.png
+        href: https://grafana.tiltlab.pro
+        widget:
+          type: grafana
+          url: https://grafana.tiltlab.pro
+          username: {{ grafana_username }}
+          password: {{ grafana_password }}
+
+    - Portainer:
+        description: Container management for docker
+        icon: portainer.png
+        href: https://portainer.tiltlab.pro
+        widget:
+          type: portainer
+          url: https://portainer.tiltlab.pro
+          env: 5
+          key: {{ portainer_key }}
+
+    - PiHole:
+        description: Network-wide Ad Blocking
+        icon: pi-hole.png
+        href: https://pihole.tiltlab.pro/admin
+        widget:
+          type: pihole
+          url: https://pihole.tiltlab.pro/admin
+          key: {{ pihole_key }}
+
+- Media:
+    - Nextcloud:
+        description: Open source content collaboration platform
+        icon: nextcloud.png
+        href: https://nextcloud.tiltlab.pro
+        widget:
+          type: nextcloud
+          url: https://nextcloud.tiltlab.pro
+          username: {{ nextcloud_username }}
+          password: {{ nextcloud_password }}
+
+    - Paperless:
+        description: Open-source document management system
+        icon: paperless.png
+        href: https://paperless.tiltlab.pro
+        widget:
+          type: paperlessngx
+          url: https://paperless.tiltlab.pro
+          username: {{ paperless_username }}
+          password: {{ paperless_password }}
+
+    - Plex:
+        description: Streaming media server
+        icon: plex.png
+        href: https://plex.tiltlab.pro
+
+
+    - Jellyfin:
+        description: Open source media server
+        icon: jellyfin.png
+
+    - Overseerr:
+        description: Media request management
+        icon: overseerr.png
+
+- Finance:
+    - EarnApp:
+        description: Passive income with your resting devices
+        icon: http://onlinepassiveincome.top/wp-content/uploads/2022/04/earnapp-logo.png
+        href: https://earnapp.com/dashboard
