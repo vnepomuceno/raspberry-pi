@@ -13,6 +13,18 @@ services:
       - ./apps/nginx/data:/data
       - ./apps/nginx/letsencrypt:/etc/letsencrypt
 
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TS_EXTRA_ARGS=--advertise-exit-node
+      - TS_STATE_DIR=./apps/tailscale/
+    volumes:
+      - '/var/lib:/var/lib'
+      - '/dev/net/tun:/dev/net/tun'
+
   pihole:
     image: pihole/pihole:latest
     container_name: pihole
