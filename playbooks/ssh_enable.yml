@@ -1,0 +1,25 @@
+---
+- name: Enable SSH on Raspberry Pi
+  hosts: raspberrypi
+  become: true
+  tasks:
+    - name: Ensure SSH service is installed
+      apt:
+        name: openssh-server
+        state: present
+        update_cache: yes
+
+    - name: Enable and start the SSH service
+      service:
+        name: ssh
+        state: started
+        enabled: yes
+
+    - name: Verify SSH is running
+      command: systemctl status ssh
+      register: ssh_status
+      ignore_errors: yes
+
+    - name: Display SSH service status
+      debug:
+        msg: "{{ ssh_status.stdout }}"

@@ -24,3 +24,4 @@
       - boto
       - botocore
     state: latest
+    executable: /usr/bin/pip3
