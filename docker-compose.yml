@@ -85,5 +85,30 @@ services:
       - ./apps/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
+  wireguard:
+    container_name: wireguard
+    image: linuxserver/wireguard:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - SERVERPORT=51820
+      - PEERS=2  # One for Android, one for MacBook
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=0.0.0.0/0
+    ports:
+      - "51820:51820/udp"
+    volumes:
+      - ./config:/config
+      - /lib/modules:/lib/modules
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+
 volumes:
   portainer_data:
