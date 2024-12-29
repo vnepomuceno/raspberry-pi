@@ -1,0 +1,21 @@
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "8181:80"
+    links:
+      - nextcloud-db
+    volumes:
+      - ./apps/nextcloud:/var/www/html
+
+  nextcloud-db:
+    image: yobasystems/alpine-mariadb:latest
+    container_name: nextcloud-db
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - ./apps/nextcloud/db:/var/lib/mysql
+    env_file:
+      - config/nextcloud.env
