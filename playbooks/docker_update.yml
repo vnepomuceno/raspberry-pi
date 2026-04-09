@@ -1,0 +1,25 @@
+---
+- name: Update all Docker services
+  hosts: raspberrypi
+  become: true
+  gather_facts: true
+  vars:
+    project_dir: /home/tilt/raspberry-pi
+  tasks:
+    - name: Pull latest images and recreate main services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}"
+        pull: always
+        state: present
+        recreate: auto
+
+    - name: Pull latest images and recreate nextcloud services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}/apps/nextcloud"
+        pull: always
+        state: present
+        recreate: auto
+
+    - name: Prune unused images
+      community.docker.docker_prune:
+        images: true

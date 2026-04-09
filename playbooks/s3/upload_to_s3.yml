@@ -11,7 +11,7 @@
         msg: "Writing in S3 bucket '{{ s3_bucket_name }}'"
 
     - name: Upload files to S3 bucket
-      aws_s3:
+      amazon.aws.s3_object:
         bucket: "{{ s3_bucket_name }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"

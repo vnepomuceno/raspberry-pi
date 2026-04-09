@@ -8,36 +8,30 @@
       - gnupg2
       - software-properties-common
 
-- name: Add Docker GPG key
-  apt_key:
+- name: Download Docker GPG key
+  ansible.builtin.get_url:
     url: https://download.docker.com/linux/debian/gpg
-    state: present
+    dest: /usr/share/keyrings/docker.asc
+    mode: '0644'
 
 - name: Add Docker repository
   apt_repository:
-    repo: deb [arch=arm64] https://download.docker.com/linux/debian buster stable
+    repo: "deb [arch=arm64 signed-by=/usr/share/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
     state: present
 
 - name: Install Docker Community Edition
   apt:
-    name: docker-ce
+    name:
+      - docker-ce
+      - docker-compose-plugin
     state: present
 
-- name: Add docker permissions to the user
-  command: "sudo usermod -aG docker ${USER}"
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
 
-# TODO: Find a way to fix this
-#- name: Install Docker Compose with pip3
-#  command: "/usr/bin/sudo /usr/bin/pip3 install -U docker-compose"
-#  args:
-#    executable: /bin/bash
-
-#- name: Install Docker Compose with pip3 for a specific user
-#  community.general.docker_compose:
-#    executable: pip3
-#    state: latest
-#  vars:
-#    user: tilt
-
-#- name: Install Docker Compose with pip3 for a specific user
-#  command: "/usr/bin/sudo -H -u tilt   /usr/bin/pip3 install --upgrade docker-compose"
+- name: Verify docker compose v2 is available
+  command: docker compose version
+  changed_when: false

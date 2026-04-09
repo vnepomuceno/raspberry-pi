@@ -11,13 +11,14 @@
         msg: "Downloading config from S3 bucket '{{ s3_bucket_name }}'"
 
     - name: Download configuration files from S3
-      aws_s3:
+      amazon.aws.s3_object:
         bucket: "{{ s3_bucket_name }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
         object: "config/{{ item | basename }}"
-        dest: "{{ ansible_env.PWD }}/raspberry-pi/{{ item | basename }}"
+        dest: "{{ ansible_env.PWD }}/raspberry-pi/config/{{ item | basename }}"
         mode: get
       with_items:
-        - "config/earnapp.env"
-        - "config/honeygain.env"
+        - "earnapp.env"
+        - "honeygain.env"
+        - "nextcloud.env"
