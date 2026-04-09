@@ -1,0 +1,26 @@
+---
+- name: Deploy latest Docker Compose configuration
+  hosts: raspberrypi
+  become: true
+  gather_facts: true
+  vars:
+    project_dir: /home/tilt/raspberry-pi
+  tasks:
+    - name: Pull latest changes from git
+      ansible.builtin.git:
+        repo: "https://github.com/vnepomuceno/raspberry-pi.git"
+        dest: "{{ project_dir }}"
+        version: main
+        force: false
+
+    - name: Apply updated compose configuration for main services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}"
+        state: present
+        recreate: auto
+
+    - name: Apply updated compose configuration for nextcloud services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}/apps/nextcloud"
+        state: present
+        recreate: auto
