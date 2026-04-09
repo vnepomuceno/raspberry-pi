@@ -7,8 +7,16 @@ services:
       - "8181:80"
     links:
       - nextcloud-db
+    depends_on:
+      nextcloud-db:
+        condition: service_healthy
     volumes:
-      - ./apps/nextcloud:/var/www/html
+      - ./data:/var/www/html
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   nextcloud-db:
     image: yobasystems/alpine-mariadb:latest
@@ -16,6 +24,17 @@ services:
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - ./apps/nextcloud/db:/var/lib/mysql
+      - ./db:/var/lib/mysql
     env_file:
       - config/nextcloud.env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

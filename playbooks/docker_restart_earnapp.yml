@@ -3,9 +3,12 @@
   hosts: raspberrypi
   become: true
   gather_facts: true
+  vars:
+    project_dir: /home/tilt/raspberry-pi
   tasks:
-    - name: Stop Docker Service EarnApp
-      command: "docker stop earnapp"
-
-    - name: Start Docker Service EarnApp
-      command: "docker-compose -f {{ ansible_env.PWD }}/raspberry-pi/docker-compose.yml up -d earnapp"
+    - name: Restart earnapp via compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}"
+        services:
+          - earnapp
+        state: restarted

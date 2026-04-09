@@ -9,7 +9,7 @@
       - ripgrep
       - htop
       - hstr
-      - exa
+      - eza
       - bash-completion
     state: present
 
@@ -18,10 +18,10 @@
     name: python3-pip
     state: present
 
-- name: Install boto and botocore with pip
+- name: Install boto3 and botocore with pip
   pip:
     name:
-      - boto
+      - boto3
       - botocore
-    state: latest
+    state: present
     executable: /usr/bin/pip3

@@ -1,0 +1,19 @@
+---
+- name: Restart all Docker services
+  hosts: raspberrypi
+  become: true
+  gather_facts: true
+  vars:
+    project_dir: /home/tilt/raspberry-pi
+  tasks:
+    - name: Restart main services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}"
+        state: present
+        recreate: auto
+
+    - name: Restart nextcloud services
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}/apps/nextcloud"
+        state: present
+        recreate: auto
