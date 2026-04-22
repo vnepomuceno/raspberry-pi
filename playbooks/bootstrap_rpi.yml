@@ -16,3 +16,6 @@
 
     - name: Install Docker and Docker Compose
       include_tasks: tasks/install_docker.yml
+
+    - name: Install and configure hstr
+      include_tasks: tasks/setup_hstr.yml
