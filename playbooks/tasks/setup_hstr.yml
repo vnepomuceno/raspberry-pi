@@ -1,0 +1,29 @@
+---
+- name: Install hstr
+  apt:
+    name: hstr
+    state: present
+
+- name: Append hstr configuration to .zshrc
+  blockinfile:
+    path: /home/{{ ansible_user }}/.zshrc
+    marker: "# hstr configuration {mark}"
+    block: |
+      alias hh=hstr
+      export HSTR_CONFIG=hicolor
+      export HISTFILE=~/.zsh_history
+      export HISTFILESIZE=10000
+      export HISTSIZE=${HISTFILESIZE}
+      setopt SHARE_HISTORY
+      setopt HIST_IGNORE_SPACE
+      bindkey -s '\C-r' '\eq hstr -- \n'
+  become_user: "{{ ansible_user }}"
+
+- name: Verify hstr is installed
+  command: hstr --version
+  register: hstr_version
+  changed_when: false
+
+- name: Display hstr version
+  debug:
+    msg: "{{ hstr_version.stdout }}"

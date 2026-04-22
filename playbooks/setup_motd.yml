@@ -1,0 +1,7 @@
+---
+- name: Setup MOTD on Raspberry Pi
+  hosts: raspberrypi
+  become: true
+  tasks:
+    - name: Setup MOTD
+      include_tasks: tasks/setup_motd.yml
