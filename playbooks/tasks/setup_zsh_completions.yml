@@ -1,0 +1,17 @@
+---
+- name: Install zsh-autosuggestions and zsh-syntax-highlighting
+  apt:
+    name:
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+    state: present
+
+- name: Enable zsh completions in .zshrc
+  blockinfile:
+    path: /home/{{ ansible_user }}/.zshrc
+    marker: "# zsh completions configuration {mark}"
+    block: |
+      autoload -Uz compinit && compinit
+      source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+      source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  become_user: "{{ ansible_user }}"

@@ -19,3 +19,6 @@
 
     - name: Install and configure hstr
       include_tasks: tasks/setup_hstr.yml
+
+    - name: Setup zsh completions
+      include_tasks: tasks/setup_zsh_completions.yml
