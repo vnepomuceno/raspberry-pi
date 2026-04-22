@@ -1,0 +1,2 @@
+[raspberrypi]
+<pi-ip-address> ansible_user=<username> ansible_ssh_pass=<password>

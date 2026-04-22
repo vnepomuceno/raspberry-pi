@@ -8,7 +8,7 @@ services:
     links:
       - nextcloud-db
     volumes:
-      - ./apps/nextcloud:/var/www/html
+      - ../../apps/nextcloud:/var/www/html
 
   nextcloud-db:
     image: yobasystems/alpine-mariadb:latest
@@ -16,6 +16,6 @@ services:
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     volumes:
-      - ./apps/nextcloud/db:/var/lib/mysql
+      - ../../apps/nextcloud/db:/var/lib/mysql
     env_file:
-      - config/nextcloud.env
+      - ../../config/nextcloud.env

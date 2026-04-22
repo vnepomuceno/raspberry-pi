@@ -25,19 +25,3 @@
 
 - name: Add docker permissions to the user
   command: "sudo usermod -aG docker ${USER}"
-
-# TODO: Find a way to fix this
-#- name: Install Docker Compose with pip3
-#  command: "/usr/bin/sudo /usr/bin/pip3 install -U docker-compose"
-#  args:
-#    executable: /bin/bash
-
-#- name: Install Docker Compose with pip3 for a specific user
-#  community.general.docker_compose:
-#    executable: pip3
-#    state: latest
-#  vars:
-#    user: tilt
-
-#- name: Install Docker Compose with pip3 for a specific user
-#  command: "/usr/bin/sudo -H -u tilt   /usr/bin/pip3 install --upgrade docker-compose"

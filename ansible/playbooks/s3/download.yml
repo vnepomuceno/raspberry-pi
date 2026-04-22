@@ -4,7 +4,7 @@
   become: true
   gather_facts: true
   vars_files:
-    - ../../config/aws.yml
+    - ../../../config/aws.yml
   tasks:
     - name: Display environment variable during playbook run
       debug:

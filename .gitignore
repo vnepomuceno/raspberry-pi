@@ -1,5 +1,7 @@
 config/*
+!config/*.example
 .idea
 .DS_Store
 apps/nginx/data/
 .claude
+ansible/inventory/hosts.ini

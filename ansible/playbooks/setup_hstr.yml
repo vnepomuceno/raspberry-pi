@@ -4,4 +4,4 @@
   become: true
   tasks:
     - name: Install and configure hstr
-      include_tasks: tasks/setup_hstr.yml
+      include_tasks: ../tasks/setup_hstr.yml

@@ -8,4 +8,4 @@
       command: "docker stop earnapp"
 
     - name: Start Docker Service EarnApp
-      command: "docker-compose -f {{ ansible_env.PWD }}/raspberry-pi/docker-compose.yml up -d earnapp"
+      command: "docker-compose -f {{ ansible_env.PWD }}/raspberry-pi/docker/docker-compose.yml up -d earnapp"
