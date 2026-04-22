@@ -1,7 +1,7 @@
 ---
 - name: Copy MOTD shell script to /etc/profile.d
   copy:
-    src: tasks/motd/motd.sh
+    src: files/motd.sh
     dest: /etc/profile.d/motd.sh
     mode: '+x'
 

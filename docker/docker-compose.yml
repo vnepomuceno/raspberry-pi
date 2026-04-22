@@ -9,8 +9,8 @@ services:
       - "81:81"
       - "443:443"
     volumes:
-      - ./apps/nginx/data:/data
-      - ./apps/nginx/letsencrypt:/etc/letsencrypt
+      - ../apps/nginx/data:/data
+      - ../apps/nginx/letsencrypt:/etc/letsencrypt
 
   tailscale:
     image: tailscale/tailscale:latest
@@ -19,7 +19,7 @@ services:
     network_mode: host
     environment:
       - TS_EXTRA_ARGS=--advertise-exit-node
-      - TS_STATE_DIR=./apps/tailscale/
+      - TS_STATE_DIR=../apps/tailscale/
     volumes:
       - '/var/lib:/var/lib'
       - '/dev/net/tun:/dev/net/tun'
@@ -37,11 +37,9 @@ services:
     environment:
       TZ: 'Europe/Lisbon'
       # WEBPASSWORD: 'set a secure password here or it will be random'
-    # Volumes store your data between container upgrades
     volumes:
-      - './apps/pihole/etc-pihole:/etc/pihole'
-      - './apps/pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+      - '../apps/pihole/etc-pihole:/etc/pihole'
+      - '../apps/pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
     cap_add:
       - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
 
@@ -52,14 +50,14 @@ services:
     restart: unless-stopped
     command: -tou-accept -email ${HONEYGAIN_USERNAME} -pass ${HONEYGAIN_PASSWORD} -device ${HONEYGAIN_DEVICE}
     env_file:
-      - config/honeygain.env
+      - ../config/honeygain.env
 
   earnapp:
     image: fazalfarhan01/earnapp:lite
     container_name: earnapp
     restart: unless-stopped
     env_file:
-      - config/earnapp.env
+      - ../config/earnapp.env
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -82,7 +80,7 @@ services:
     ports:
       - "4000:3000"
     volumes:
-      - ./apps/homepage:/app/config
+      - ../apps/homepage:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:

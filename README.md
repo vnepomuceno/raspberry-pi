@@ -25,29 +25,36 @@ Ansible playbooks and Docker Compose configuration for bootstrapping and managin
 
 ### Inventory
 
-The inventory lives in `config/hosts.yml`. It defines the `raspberrypi` host group used by all playbooks.
+Copy the example and fill in your Pi's IP and credentials:
+
+```bash
+cp ansible/inventory/hosts.ini.example ansible/inventory/hosts.ini
+```
 
 ### Running playbooks
 
 ```bash
 # Verify connectivity
-ansible-playbook playbooks/ping.yml
+ansible-playbook ansible/playbooks/ping.yml
 
 # Full bootstrap (dependencies, Docker, shell setup)
-ansible-playbook playbooks/bootstrap_rpi.yml
+ansible-playbook ansible/playbooks/bootstrap.yml
 
 # Individual setup tasks
-ansible-playbook playbooks/ssh_enable.yml
-ansible-playbook playbooks/setup_motd.yml
-ansible-playbook playbooks/setup_hstr.yml
-ansible-playbook playbooks/setup_zsh_completions.yml
+ansible-playbook ansible/playbooks/ssh_enable.yml
+ansible-playbook ansible/playbooks/setup_motd.yml
+ansible-playbook ansible/playbooks/setup_hstr.yml
+ansible-playbook ansible/playbooks/setup_zsh_completions.yml
 
 # S3 backup / restore of config files
-ansible-playbook playbooks/s3/upload_to_s3.yml
-ansible-playbook playbooks/s3/download_from_s3.yml
+ansible-playbook ansible/playbooks/s3/upload.yml
+ansible-playbook ansible/playbooks/s3/download.yml
+
+# Operational tasks
+ansible-playbook ansible/playbooks/ops/restart_earnapp.yml
 ```
 
-### Bootstrap playbook (`bootstrap_rpi.yml`)
+### Bootstrap playbook (`ansible/playbooks/bootstrap.yml`)
 
 Runs the following tasks in order:
 
@@ -62,7 +69,7 @@ Runs the following tasks in order:
 
 ## Docker services
 
-All services are defined in `docker-compose.yml` (plus `apps/nextcloud/docker-compose.yml` for Nextcloud).
+All services are defined in `docker/docker-compose.yml` (plus `docker/nextcloud/docker-compose.yml` for Nextcloud).
 
 | Service | Image | Port(s) | Description |
 |---|---|---|---|
@@ -80,27 +87,22 @@ All services are defined in `docker-compose.yml` (plus `apps/nextcloud/docker-co
 
 ```bash
 # Start all services
-docker compose up -d
+docker compose -f docker/docker-compose.yml up -d
 
 # Start Nextcloud stack separately
-cd apps/nextcloud && docker compose up -d
+docker compose -f docker/nextcloud/docker-compose.yml up -d
 ```
 
 ### Environment files
 
-Sensitive config is kept in env files (not committed):
+Sensitive config is kept in env files (not committed). Copy the examples and fill in values before starting:
 
-| File | Used by |
-|---|---|
-| `config/honeygain.env` | `honeygain` container |
-| `config/earnapp.env` | `earnapp` container |
-| `config/nextcloud.env` | `nextcloud-db` container |
-
-Copy and fill in values before starting:
-
-```bash
-cp config/nextcloud.env.example config/nextcloud.env  # if an example exists
-```
+| Example file | Copy to | Used by |
+|---|---|---|
+| `config/honeygain.env.example` | `config/honeygain.env` | `honeygain` container |
+| `config/earnapp.env.example` | `config/earnapp.env` | `earnapp` container |
+| `config/nextcloud.env.example` | `config/nextcloud.env` | `nextcloud-db` container |
+| `config/aws.yml.example` | `config/aws.yml` | S3 playbooks |
 
 ### Homepage dashboard
 
@@ -113,8 +115,8 @@ The dashboard at `http://<pi-ip>:4000` is configured via `apps/homepage/`. Servi
 AWS credentials and bucket name are read from `config/aws.yml`. The upload playbook backs up the three env files to `s3://<bucket>/config/`.
 
 ```bash
-ansible-playbook playbooks/s3/upload_to_s3.yml
-ansible-playbook playbooks/s3/download_from_s3.yml
+ansible-playbook ansible/playbooks/s3/upload.yml
+ansible-playbook ansible/playbooks/s3/download.yml
 ```
 
 ---
@@ -124,7 +126,7 @@ ansible-playbook playbooks/s3/download_from_s3.yml
 If SSH is not yet running on a fresh Pi:
 
 ```bash
-ansible-playbook playbooks/ssh_enable.yml
+ansible-playbook ansible/playbooks/ssh_enable.yml
 ```
 
 This installs `openssh-server`, enables the service, and prints its status.

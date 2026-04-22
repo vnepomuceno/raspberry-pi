@@ -5,20 +5,20 @@
   become: true
   tasks:
     - name: Install dependencies
-      include_tasks: tasks/install_dependencies.yml
+      include_tasks: ../tasks/install_dependencies.yml
 
     - name: Setup custom MOTD
-      include_tasks: tasks/setup_motd.yml
+      include_tasks: ../tasks/setup_motd.yml
 
     - name: Update APT cache
       apt:
         update_cache: yes
 
     - name: Install Docker and Docker Compose
-      include_tasks: tasks/install_docker.yml
+      include_tasks: ../tasks/install_docker.yml
 
     - name: Install and configure hstr
-      include_tasks: tasks/setup_hstr.yml
+      include_tasks: ../tasks/setup_hstr.yml
 
     - name: Setup zsh completions
-      include_tasks: tasks/setup_zsh_completions.yml
+      include_tasks: ../tasks/setup_zsh_completions.yml

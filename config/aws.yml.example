@@ -1,0 +1,4 @@
+s3_bucket_name: <bucket-name>
+aws_access_key: <aws-access-key>
+aws_secret_key: <aws-secret-key>
+cloudflare_user_api_token: <cloudflare-api-token>
